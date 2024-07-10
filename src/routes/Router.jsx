@@ -11,26 +11,26 @@ import { SignUp } from "../pages/SignUp";
 import { EditList } from "../pages/EditList";
 
 export const Router = () => {
-  const auth = useSelector((state) => state.auth.isSignIn)
+  const auth = useSelector((state) => state.auth.isSignIn);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/signin" component={SignIn} />
-        <Route exact path="/signup" component={SignUp} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
         {auth ? (
           <>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/task/new" component={NewTask} />
-            <Route exact path="/list/new" component={NewList} />
-            <Route exact path="/lists/:listId/tasks/:taskId" component={EditTask} />
-            <Route exact path="/lists/:listId/edit" component={EditList} />
+            <Route path="/" element={<Home />} />
+            <Route path="/task/new" element={<NewTask />} />
+            <Route path="/list/new" element={<NewList />} />
+            <Route path="/lists/:listId/tasks/:taskId" element={<EditTask />} />
+            <Route path="/lists/:listId/edit" element={<EditList />} />
           </>
         ) : (
-          <Navigate to="/signin" />
+          <Route path="/*" element={<Navigate to="/signin" />} />
         )}
-        <Route component={NotFound} />
+        <Route element={NotFound} />
       </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};
