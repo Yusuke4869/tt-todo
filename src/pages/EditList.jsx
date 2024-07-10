@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import { url } from "../const";
 import "./editList.css";
 
 export const EditList = () => {
-  const history = useHistory();
+  const history = useNavigate();
   const { listId } = useParams();
   const [title, setTitle] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -58,6 +58,7 @@ export const EditList = () => {
     .catch((err) => {
       setErrorMessage(`リスト情報の取得に失敗しました。${err}`);
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

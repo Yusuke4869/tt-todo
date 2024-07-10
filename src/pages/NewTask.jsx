@@ -4,7 +4,7 @@ import axios from "axios";
 import { url } from "../const";
 import { Header } from "../components/Header";
 import "./newTask.css"
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const NewTask = () => {
   const [selectListId, setSelectListId] = useState();
@@ -13,7 +13,7 @@ export const NewTask = () => {
   const [detail, setDetail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
-  const history = useHistory();
+  const history = useNavigate();
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleSelectList = (id) => setSelectListId(id);
@@ -50,6 +50,7 @@ export const NewTask = () => {
     .catch((err) => {
       setErrorMessage(`リストの取得に失敗しました。${err}`);
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

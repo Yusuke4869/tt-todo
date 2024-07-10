@@ -27,6 +27,7 @@ export const Home = () => {
     .catch((err) => {
       setErrorMessage(`リストの取得に失敗しました。${err}`);
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -45,6 +46,7 @@ export const Home = () => {
         setErrorMessage(`タスクの取得に失敗しました。${err}`);
       })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lists]);
 
   const handleSelectList = (id) => {
@@ -78,7 +80,7 @@ export const Home = () => {
             {lists.map((list, key) => {
               const isActive = list.id === selectListId;
               return (
-                <li 
+                <li
                   key={key}
                   className={`list-tab-item ${isActive ? "active" : ""}`}
                   onClick={() => handleSelectList(list.id)}
@@ -112,7 +114,7 @@ const Tasks = (props) => {
   const { tasks, selectListId, isDoneDisplay } = props;
   if (tasks === null) return <></>
 
-  if(isDoneDisplay == "done"){
+  if(isDoneDisplay === "done"){
     return (
       <ul>
         {tasks.filter((task) => {
