@@ -12,7 +12,7 @@ type Props = {
 const Tasks: FC<Props> = ({ tasks, selectListId, isDoneDisplay }) => {
   if (!selectListId || !tasks) return null;
 
-  isDoneDisplay === "done" ? (
+  return isDoneDisplay === "done" ? (
     <ul>
       {tasks
         .filter((task) => task.done)
