@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
 
-import "./style.css";
+import "./style.scss";
 import { Header } from "~/components";
 
 import Tasks from "./task";

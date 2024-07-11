@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
-import "./style.css";
+import "./style.scss";
 import { Header } from "~/components";
 
 import type { FC } from "react";

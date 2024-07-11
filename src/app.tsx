@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 
 import { Router } from "./router";
 import { store } from "./stores/store";
-import "~/styles/app.css";
+import "~/styles/app.scss";
 
 import type { FC } from "react";
 

@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { Navigate, useNavigate, Link } from "react-router-dom";
 
-import "./style.css";
+import "./style.scss";
 import { Header } from "~/components";
 import { signIn } from "~/stores/authSlice";
 import { useSelector } from "~/stores/store";

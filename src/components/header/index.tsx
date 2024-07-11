@@ -2,7 +2,7 @@ import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import "./style.css";
+import "./style.scss";
 import { signOut } from "~/stores/authSlice";
 import { useSelector } from "~/stores/store";
 
