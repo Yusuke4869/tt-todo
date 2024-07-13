@@ -1,36 +1,68 @@
-@charset "utf-8";
-
 .edit-list {
-  width: 1000px;
-  margin: 0 auto;
-}
-
-.edit-list-form {
-  color: #555555;
-}
-
-.edit-list-title {
-  width: 300px;
-  margin-bottom: 25px;
-}
-
-.delete-list-button {
-  color: #ff3333;
-  border: solid 1px #ff3333;
-  width: 80px;
-  height: 40px;
-  margin: 25px 5px;
-  border-radius: 5px;
-}
-
-.edit-list-button {
-  background-color: #242f9b;
-  color: #ffffff;
-  width: 80px;
-  height: 40px;
-  border-radius: 5px;
+  width: 60%;
+  margin: 1.5rem auto;
 }
 
 .error-message {
   color: #ff3333;
+}
+
+.edit-list-form {
+  color: #555555;
+
+  .form-block {
+    display: flex;
+    flex-direction: column;
+    margin: 1.5rem 0;
+  }
+
+  .input {
+    width: 40%;
+    line-height: 1.5;
+    padding: 0.2rem;
+  }
+
+  .buttons-wapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+
+    button {
+      border-radius: 0.25rem;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+    }
+
+    .delete-list-button {
+      color: #ff3333;
+      border: solid 1px #ff3333;
+    }
+
+    .edit-list-button {
+      color: #ffffff;
+      background-color: #242f9b;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .edit-list {
+    width: 80%;
+  }
+
+  .edit-list-form .input {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .edit-list {
+    width: 85%;
+  }
+
+  .edit-list-form .input {
+    width: 90%;
+  }
 }

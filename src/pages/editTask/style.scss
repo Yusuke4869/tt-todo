@@ -59,3 +59,23 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .edit-task {
+    width: 80%;
+  }
+
+  .edit-task-form .input {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .edit-task {
+    width: 85%;
+  }
+
+  .edit-task-form .input {
+    width: 90%;
+  }
+}

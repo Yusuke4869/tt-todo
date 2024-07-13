@@ -41,3 +41,35 @@
     padding: 0.5rem 1.5rem;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .new-task {
+    width: 80%;
+  }
+
+  .new-task-form {
+    .input {
+      width: 60%;
+    }
+
+    select {
+      width: 60%;
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .new-task {
+    width: 85%;
+  }
+
+  .new-task-form {
+    .input {
+      width: 90%;
+    }
+
+    select {
+      width: 90%;
+    }
+  }
+}

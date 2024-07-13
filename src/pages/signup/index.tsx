@@ -50,42 +50,42 @@ export const SignUp: FC = () => {
   if (auth) return <Navigate to="/" />;
 
   return (
-    <div>
+    <>
       <Header />
       <main className="signup">
         <h2>新規作成</h2>
-        <p className="error-message">{errorMessage}</p>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <form className="signup-form">
-          <label>メールアドレス</label>
-          <br />
-          <input
-            className="email-input"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            type="email"
-          />
-          <br />
-          <label>ユーザ名</label>
-          <br />
-          <input
-            className="name-input"
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-            type="text"
-          />
-          <br />
-          <label>パスワード</label>
-          <br />
-          <input
-            className="password-input"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            type="password"
-          />
-          <br />
+          <div className="form-block">
+            <label>メールアドレス</label>
+            <input
+              className="input"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              type="email"
+            />
+          </div>
+          <div className="form-block">
+            <label>ユーザ名</label>
+            <input
+              className="input"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              type="text"
+            />
+          </div>
+          <div className="form-block">
+            <label>パスワード</label>
+            <input
+              className="input"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              type="password"
+            />
+          </div>
           <button
             className="signup-button"
             onClick={() => {
@@ -97,6 +97,6 @@ export const SignUp: FC = () => {
           </button>
         </form>
       </main>
-    </div>
+    </>
   );
 };

@@ -1,6 +1,6 @@
 .list-task {
   width: 60%;
-  margin: 50px auto;
+  margin: 3rem auto;
 }
 
 .error-message {
@@ -94,6 +94,53 @@
 
     .expired {
       color: #ff3333;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .list-task {
+    width: 80%;
+  }
+
+  .list-tab {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .list-task {
+    width: 90%;
+    margin-top: 1.5rem;
+  }
+
+  .list-header {
+    flex-direction: column;
+
+    .list-menu {
+      margin-left: auto;
+    }
+  }
+
+  .list-tab {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tasks {
+    .tasks-header {
+      flex-direction: column;
+
+      h2 {
+        margin-right: auto;
+      }
+
+      a {
+        margin-left: auto;
+      }
+    }
+
+    select {
+      margin-left: auto;
     }
   }
 }

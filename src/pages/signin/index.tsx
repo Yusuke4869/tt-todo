@@ -48,32 +48,32 @@ export const SignIn: FC = () => {
   if (auth) return <Navigate to="/" />;
 
   return (
-    <div>
+    <>
       <Header />
       <main className="signin">
         <h2>サインイン</h2>
-        <p className="error-message">{errorMessage}</p>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <form className="signin-form">
-          <label className="email-label">メールアドレス</label>
-          <br />
-          <input
-            className="email-input"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            type="email"
-          />
-          <br />
-          <label className="password-label">パスワード</label>
-          <br />
-          <input
-            className="password-input"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            type="password"
-          />
-          <br />
+          <div className="form-block">
+            <label>メールアドレス</label>
+            <input
+              className="input"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              type="email"
+            />
+          </div>
+          <div className="form-block">
+            <label>パスワード</label>
+            <input
+              className="input"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              type="password"
+            />
+          </div>
           <button
             className="signin-button"
             onClick={() => {
@@ -84,8 +84,10 @@ export const SignIn: FC = () => {
             サインイン
           </button>
         </form>
-        <Link to="/signup">新規作成</Link>
+        <div className="to-signup">
+          <Link to="/signup">新規作成</Link>
+        </div>
       </main>
-    </div>
+    </>
   );
 };

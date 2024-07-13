@@ -79,43 +79,45 @@ export const EditList: FC = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <Header />
       <main className="edit-list">
         <h2>リスト編集</h2>
-        <p className="error-message">{errorMessage}</p>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <form className="edit-list-form">
-          <label>タイトル</label>
-          <br />
-          <input
-            className="edit-list-title"
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-            type="text"
-            value={title}
-          />
-          <br />
-          <button
-            className="delete-list-button"
-            onClick={() => {
-              void onDeleteList();
-            }}
-            type="button"
-          >
-            削除
-          </button>
-          <button
-            className="edit-list-button"
-            onClick={() => {
-              void onUpdateList();
-            }}
-            type="button"
-          >
-            更新
-          </button>
+          <div className="form-block">
+            <label>タイトル</label>
+            <input
+              className="input"
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+              type="text"
+              value={title}
+            />
+          </div>
+          <div className="buttons-wapper">
+            <button
+              className="delete-list-button"
+              onClick={() => {
+                void onDeleteList();
+              }}
+              type="button"
+            >
+              削除
+            </button>
+            <button
+              className="edit-list-button"
+              onClick={() => {
+                void onUpdateList();
+              }}
+              type="button"
+            >
+              更新
+            </button>
+          </div>
         </form>
       </main>
-    </div>
+    </>
   );
 };

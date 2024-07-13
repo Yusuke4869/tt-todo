@@ -39,22 +39,22 @@ export const NewList: FC = () => {
   };
 
   return (
-    <div>
+    <>
       <Header />
       <main className="new-list">
         <h2>リスト新規作成</h2>
-        <p className="error-message">{errorMessage}</p>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <form className="new-list-form">
-          <label>タイトル</label>
-          <br />
-          <input
-            className="new-list-title"
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-            type="text"
-          />
-          <br />
+          <div className="form-block">
+            <label>タイトル</label>
+            <input
+              className="input"
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+              type="text"
+            />
+          </div>
           <button
             className="new-list-button"
             onClick={() => {
@@ -66,6 +66,6 @@ export const NewList: FC = () => {
           </button>
         </form>
       </main>
-    </div>
+    </>
   );
 };
