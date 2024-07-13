@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import "./style.scss";
 import { Header } from "~/components";
 
-import Tasks from "./task";
+import TaskComponent from "./task";
 
-import type { FC } from "react";
+import type { FC, KeyboardEvent } from "react";
 import type { APIError, List, TaskList, Task } from "~/types/api";
 import type { Cookie } from "~/types/cookie";
 
@@ -57,7 +57,13 @@ export const Home: FC = () => {
     }
 
     const data = (await res.json()) as TaskList;
-    setTasks(data.tasks);
+    setTasks(data.tasks ?? []);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLLIElement>, id: string) => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    void handleSelectList(id);
   };
 
   useEffect(() => {
@@ -68,60 +74,58 @@ export const Home: FC = () => {
   }, [lists]);
 
   return (
-    <div>
+    <>
       <Header />
-      <main className="taskList">
-        <p className="error-message">{errorMessage}</p>
-        <div>
+      <main className="list-task">
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        <div className="lists">
           <div className="list-header">
             <h2>リスト一覧</h2>
             <div className="list-menu">
-              <p>
-                <Link to="/list/new">リスト新規作成</Link>
-              </p>
-              {selectListId && (
-                <p>
-                  <Link to={`/lists/${selectListId}/edit`}>選択中のリストを編集</Link>
-                </p>
-              )}
+              <Link to="/list/new">リスト新規作成</Link>
+              {selectListId && <Link to={`/lists/${selectListId}/edit`}>選択中のリストを編集</Link>}
             </div>
           </div>
-          <ul className="list-tab">
-            {lists.map((list, key) => {
-              const isActive = list.id === selectListId;
-              return (
-                <li
-                  className={`list-tab-item ${isActive ? "active" : ""}`}
-                  key={key}
-                  onClick={() => {
-                    void handleSelectList(list.id);
-                  }}
-                >
-                  {list.title}
-                </li>
-              );
-            })}
-          </ul>
-          <div className="tasks">
-            <div className="tasks-header">
-              <h2>タスク一覧</h2>
-              <Link to="/task/new">タスク新規作成</Link>
-            </div>
-            <div className="display-select-wrapper">
-              <select
-                className="display-select"
-                onChange={(e) => {
-                  setIsDoneDisplay(e.target.value);
+          <ul className="list-tab" role="tablist">
+            {lists.map((list, key) => (
+              <li
+                className={`list-tab-item ${list.id === selectListId ? "active" : ""}`}
+                key={key}
+                onClick={() => {
+                  void handleSelectList(list.id);
                 }}
+                onKeyDown={(e) => {
+                  handleKeyDown(e, list.id);
+                }}
+                role="tab"
+                tabIndex={0}
               >
-                <option value="todo">未完了</option>
-                <option value="done">完了</option>
-              </select>
-            </div>
-            <Tasks isDoneDisplay={isDoneDisplay} selectListId={selectListId} tasks={tasks} />
+                {list.title}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="tasks">
+          <div className="tasks-header">
+            <h2>タスク一覧</h2>
+            <Link to="/task/new">タスク新規作成</Link>
+          </div>
+          <select
+            onChange={(e) => {
+              setIsDoneDisplay(e.target.value);
+            }}
+          >
+            <option value="todo">未完了</option>
+            <option value="done">完了</option>
+          </select>
+          <div>
+            {selectListId &&
+              tasks
+                .filter((task) => (isDoneDisplay === "done" ? task.done : !task.done))
+                .map((task, key) => <TaskComponent key={key} selectListId={selectListId} task={task} />)}
           </div>
         </div>
       </main>
-    </div>
+    </>
   );
 };
