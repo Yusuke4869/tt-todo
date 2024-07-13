@@ -1,6 +1,6 @@
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import "./style.scss";
 import { signOut } from "~/stores/authSlice";
@@ -22,12 +22,10 @@ export const Header: FC = () => {
 
   return (
     <header className="header">
-      <h1>Todoアプリ</h1>
-      {auth && (
-        <button className="sign-out-button" onClick={handleSignOut}>
-          サインアウト
-        </button>
-      )}
+      <h1>
+        <Link to="/">Todoアプリ</Link>
+      </h1>
+      {auth && <button onClick={handleSignOut}>サインアウト</button>}
     </header>
   );
 };
