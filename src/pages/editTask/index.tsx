@@ -17,10 +17,11 @@ export const EditTask: FC = () => {
   const [title, setTitle] = useState<string>("");
   const [detail, setDetail] = useState<string>("");
   const [isDone, setIsDone] = useState<boolean>(false);
+  const [limit, setLimit] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>();
 
   const onUpdateTask = async () => {
-    if (title === "" || detail === "" || !listId || !taskId || !cookies.token) return;
+    if (!listId || !taskId || !cookies.token) return;
     const res = await fetch(`${import.meta.env.VITE_API_URL}/lists/${listId}/tasks/${taskId}`, {
       method: "PUT",
       headers: {
@@ -31,6 +32,7 @@ export const EditTask: FC = () => {
         title: title,
         detail: detail,
         done: isDone,
+        limit: limit ? new Date(limit).toISOString().replace(".000", "") : null,
       }),
     });
 
@@ -80,83 +82,106 @@ export const EditTask: FC = () => {
       setTitle(task.title);
       setDetail(task.detail);
       setIsDone(task.done);
+      if (task.limit)
+        setLimit(
+          new Date(new Date(task.limit).getTime() - new Date().getTimezoneOffset() * 60 * 1000)
+            .toISOString()
+            .replace(".000Z", "")
+        );
     })();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div>
+    <>
       <Header />
       <main className="edit-task">
         <h2>タスク編集</h2>
-        <p className="error-message">{errorMessage}</p>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <form className="edit-task-form">
-          <label>タイトル</label>
-          <br />
-          <input
-            className="edit-task-title"
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-            type="text"
-            value={title}
-          />
-          <br />
-          <label>詳細</label>
-          <br />
-          <textarea
-            className="edit-task-detail"
-            onChange={(e) => {
-              setDetail(e.target.value);
-            }}
-            value={detail}
-          />
-          <br />
-          <div>
+          <div className="form-block">
+            <label>タイトル</label>
             <input
-              checked={!isDone}
-              id="todo"
-              name="status"
+              className="input"
               onChange={(e) => {
-                setIsDone(e.target.value === "done");
+                setTitle(e.target.value);
               }}
-              type="radio"
-              value="todo"
+              type="text"
+              value={title}
             />
-            未完了
-            <input
-              checked={isDone}
-              id="done"
-              name="status"
-              onChange={(e) => {
-                setIsDone(e.target.value === "done");
-              }}
-              type="radio"
-              value="done"
-            />
-            完了
           </div>
-          <button
-            className="delete-task-button"
-            onClick={() => {
-              void onDeleteTask();
-            }}
-            type="button"
-          >
-            削除
-          </button>
-          <button
-            className="edit-task-button"
-            onClick={() => {
-              void onUpdateTask();
-            }}
-            type="button"
-          >
-            更新
-          </button>
+          <div className="form-block">
+            <label>詳細</label>
+            <textarea
+              className="input"
+              onChange={(e) => {
+                setDetail(e.target.value);
+              }}
+              value={detail}
+            />
+          </div>
+          <div className="form-block">
+            <label>期限</label>
+            <input
+              className="input"
+              onChange={(e) => {
+                setLimit(e.target.value);
+              }}
+              type="datetime-local"
+              value={limit}
+            />
+          </div>
+          <div className="radios-wapper">
+            <div className="radio-wapper">
+              <input
+                checked={!isDone}
+                id="todo"
+                name="status"
+                onChange={(e) => {
+                  setIsDone(e.target.value === "done");
+                }}
+                type="radio"
+                value="todo"
+              />
+              <label>未完了</label>
+            </div>
+            <div className="radio-wapper">
+              <input
+                checked={isDone}
+                id="done"
+                name="status"
+                onChange={(e) => {
+                  setIsDone(e.target.value === "done");
+                }}
+                type="radio"
+                value="done"
+              />
+              <label>完了</label>
+            </div>
+          </div>
+          <div className="buttons-wapper">
+            <button
+              className="delete-task-button"
+              onClick={() => {
+                void onDeleteTask();
+              }}
+              type="button"
+            >
+              削除
+            </button>
+            <button
+              className="edit-task-button"
+              onClick={() => {
+                void onUpdateTask();
+              }}
+              type="button"
+            >
+              更新
+            </button>
+          </div>
         </form>
       </main>
-    </div>
+    </>
   );
 };

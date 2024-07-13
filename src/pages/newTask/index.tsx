@@ -16,11 +16,12 @@ export const NewTask: FC = () => {
   const [lists, setLists] = useState<List[]>([]);
   const [title, setTitle] = useState<string>("");
   const [detail, setDetail] = useState<string>("");
+  const [limit, setLimit] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>();
   const [selectListId, setSelectListId] = useState<string>();
 
   const onCreateTask = async () => {
-    if (title === "" || detail === "" || !selectListId || !cookies.token) return;
+    if (!selectListId || !cookies.token) return;
     const res = await fetch(`${import.meta.env.VITE_API_URL}/lists/${selectListId}/tasks`, {
       method: "POST",
       headers: {
@@ -31,6 +32,7 @@ export const NewTask: FC = () => {
         title: title,
         detail: detail,
         done: false,
+        limit: limit ? new Date(limit).toISOString().replace(".000", "") : null,
       }),
     });
 
@@ -66,46 +68,56 @@ export const NewTask: FC = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <Header />
       <main className="new-task">
         <h2>タスク新規作成</h2>
-        <p className="error-message">{errorMessage}</p>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <form className="new-task-form">
-          <label>リスト</label>
-          <br />
-          <select
-            className="new-task-select-list"
-            onChange={(e) => {
-              setSelectListId(e.target.value);
-            }}
-          >
-            {lists.map((list, key) => (
-              <option className="list-item" key={key} value={list.id}>
-                {list.title}
-              </option>
-            ))}
-          </select>
-          <br />
-          <label>タイトル</label>
-          <br />
-          <input
-            className="new-task-title"
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-            type="text"
-          />
-          <br />
-          <label>詳細</label>
-          <br />
-          <textarea
-            className="new-task-detail"
-            onChange={(e) => {
-              setDetail(e.target.value);
-            }}
-          />
-          <br />
+          <div className="form-block">
+            <label>リスト</label>
+            <select
+              onChange={(e) => {
+                setSelectListId(e.target.value);
+              }}
+            >
+              {lists.map((list, key) => (
+                <option className="list-item" key={key} value={list.id}>
+                  {list.title}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-block">
+            <label>タイトル</label>
+            <input
+              className="input"
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+              type="text"
+            />
+          </div>
+          <div className="form-block">
+            <label>詳細</label>
+            <textarea
+              className="input"
+              onChange={(e) => {
+                setDetail(e.target.value);
+              }}
+            />
+          </div>
+          <div className="form-block">
+            <label>期限</label>
+            <input
+              className="input"
+              onChange={(e) => {
+                setLimit(e.target.value);
+              }}
+              type="datetime-local"
+              value={limit}
+            />
+          </div>
           <button
             className="new-task-button"
             onClick={() => {
@@ -117,6 +129,6 @@ export const NewTask: FC = () => {
           </button>
         </form>
       </main>
-    </div>
+    </>
   );
 };
