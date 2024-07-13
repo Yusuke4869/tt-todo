@@ -19,7 +19,7 @@ export type Task = {
 export type TaskList = {
   listId: string;
   name: string;
-  tasks: Task[];
+  tasks: Task[] | null;
 };
 
 export type TaskResponse = Omit<Task, "id"> & {
